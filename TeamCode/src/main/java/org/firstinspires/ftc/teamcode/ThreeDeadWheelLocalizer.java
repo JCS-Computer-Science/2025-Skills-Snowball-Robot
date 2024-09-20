@@ -19,6 +19,7 @@ import org.firstinspires.ftc.teamcode.messages.ThreeDeadWheelInputsMessage;
 
 @Config
 public final class ThreeDeadWheelLocalizer implements Localizer {
+
     public static class Params {
         public double par0YTicks = 0.0; // y position of the first parallel encoder (in tick units)
         public double par1YTicks = 1.0; // y position of the second parallel encoder (in tick units)
@@ -33,6 +34,7 @@ public final class ThreeDeadWheelLocalizer implements Localizer {
 
     private int lastPar0Pos, lastPar1Pos, lastPerpPos;
     private boolean initialized;
+
 
     public ThreeDeadWheelLocalizer(HardwareMap hardwareMap, double inPerTick) {
         // TODO: make sure your config has **motors** with these names (or change them)
