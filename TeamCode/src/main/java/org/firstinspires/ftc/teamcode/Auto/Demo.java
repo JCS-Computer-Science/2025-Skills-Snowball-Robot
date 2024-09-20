@@ -3,10 +3,13 @@ package org.firstinspires.ftc.teamcode.Auto;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
+@Autonomous(name="Demo Auto")
 public class Demo extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
