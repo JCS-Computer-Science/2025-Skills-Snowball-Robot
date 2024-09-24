@@ -55,8 +55,6 @@ import java.util.List;
 public final class MecanumDrive {
     public static class Params {
         // IMU orientation
-        // TODO: fill in these values based on
-        //   see https://ftc-docs.firstinspires.org/en/latest/programming_resources/imu/imu.html?highlight=imu#physical-hub-mounting
         public RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection =
                 RevHubOrientationOnRobot.LogoFacingDirection.UP;
         public RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection =
@@ -132,8 +130,6 @@ public final class MecanumDrive {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
-        // TODO: make sure your config has motors with these names (or change them)
-        //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html
         leftFront = hardwareMap.get(DcMotorEx.class, "frontLeft");
         leftBack = hardwareMap.get(DcMotorEx.class, "rearLeft");
         rightBack = hardwareMap.get(DcMotorEx.class, "rearRight");
@@ -144,13 +140,10 @@ public final class MecanumDrive {
         rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        // TODO: reverse motor directions if needed
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        // TODO: make sure your config has an IMU with this name (can be BNO or BHI)
-        //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html
         lazyImu = new LazyImu(hardwareMap, "imu", new RevHubOrientationOnRobot(
                 PARAMS.logoFacingDirection, PARAMS.usbFacingDirection));
 
@@ -405,4 +398,29 @@ public final class MecanumDrive {
                 defaultVelConstraint, defaultAccelConstraint
         );
     }
+
+    private final class DriveAction implements Action{
+        GamepadEx driver;
+
+        public DriveAction(GamepadEx gamepad){
+            driver=gamepad;
+        }
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            setDrivePowers(new PoseVelocity2d(
+                    new Vector2d(
+                            -driver.gamepad.left_stick_y,
+                            -driver.gamepad.left_stick_x
+                    ),
+                    -driver.gamepad.right_stick_x
+            ));
+            return true;
+        }
+    }
+    public DriveAction driveAction(GamepadEx gamepad){
+        return new DriveAction(gamepad);
+    }
+
 }
+
+
