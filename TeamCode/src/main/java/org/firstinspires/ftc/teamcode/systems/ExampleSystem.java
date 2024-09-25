@@ -6,33 +6,35 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class ExampleSystem {
 
-    private DcMotorEx motor;
+
+    private Servo servo;
 
     public ExampleSystem(HardwareMap hardwareMap){
-        motor = hardwareMap.get(DcMotorEx.class, "motor");
+
+        servo=hardwareMap.get(Servo.class,"servo");
     }
 
-    public class SetMotor implements Action {
-        private double speed;
+    public class SetServo implements Action {
+        private double position;
         private boolean initialized = false;
-        public SetMotor(double speed){
-            super();
-            this.speed=speed;
+        public SetServo(double position){
+            this.position=position;
         }
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             if(!this.initialized){
-                motor.setPower(this.speed);
+                servo.setPosition(position);
                 initialized=true;
             }
             return false;
         }
     }
 
-    public Action setMotor(double speed){
-        return new SetMotor(speed);
+    public Action setServo(double position){
+        return new SetServo(position);
     }
 }

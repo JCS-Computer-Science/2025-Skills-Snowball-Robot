@@ -56,8 +56,8 @@ public class BasicOpMode_Iterative extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftDrive = null;
-    private DcMotor rightDrive = null;
+    private DcMotor leftDrive;
+    private DcMotor rightDrive;
 
     /*
      * Code to run ONCE when the driver hits INIT

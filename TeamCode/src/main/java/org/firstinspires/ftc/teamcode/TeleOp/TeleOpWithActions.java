@@ -42,10 +42,10 @@ public class TeleOpWithActions extends OpMode {
 
         //add actions as needed here, eg:
         if(driver.getButton(GamepadEx.Button.A).justPressed){
-            runningActions.add(exampleSystem.setMotor(1));
+            runningActions.add(exampleSystem.setServo(1));
         }
         if(driver.getButton(GamepadEx.Button.B).justPressed){
-            runningActions.add(exampleSystem.setMotor(0));
+            runningActions.add(exampleSystem.setServo(0));
         }
 
 
