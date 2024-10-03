@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.GamepadEx;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.systems.ExampleSystem;
+import org.firstinspires.ftc.teamcode.systems.SlidingArm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class TeleOpWithActions extends OpMode {
     public GamepadEx driver, operator;
     public MecanumDrive drive;
     public ExampleSystem exampleSystem;
+    public SlidingArm slidingArm;
 
     @Override
     public void init() {
@@ -28,6 +30,7 @@ public class TeleOpWithActions extends OpMode {
         operator=new GamepadEx(gamepad2);
         drive=new MecanumDrive(hardwareMap, new Pose2d(0,0,0));
         exampleSystem = new ExampleSystem(hardwareMap);
+        slidingArm = new SlidingArm(hardwareMap);
 
         runningActions.add(drive.driveAction(driver));
     }
@@ -37,6 +40,7 @@ public class TeleOpWithActions extends OpMode {
         TelemetryPacket packet = new TelemetryPacket();
         driver.update();
         operator.update();
+        packet.put("slidingArmPosition", slidingArm.getPosition());
 
         //add actions as needed here, eg:
         if(driver.getButton(GamepadEx.Button.A).justPressed){
@@ -44,6 +48,12 @@ public class TeleOpWithActions extends OpMode {
         }
         if(driver.getButton(GamepadEx.Button.B).justPressed){
             runningActions.add(exampleSystem.setServo(0));
+        }
+        if(driver.getButton(GamepadEx.Button.X).justPressed){
+            runningActions.add(slidingArm.setPosition(900));
+        }
+        if(driver.getButton(GamepadEx.Button.Y).justPressed){
+            runningActions.add(slidingArm.setPosition(20));
         }
 
 

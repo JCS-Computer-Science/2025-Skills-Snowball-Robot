@@ -17,10 +17,7 @@ public class Demo extends LinearOpMode {
 
         waitForStart();
 
-//        Actions.runBlocking(
-//                drive.actionBuilder(drive.pose) //see https://rr.brott.dev/docs/v1-0/builder-ref/ for available actions
-//                        .splineTo(new Vector2d(10, 0), Math.PI / 2)
-//                        .build());
+//
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .lineToX(30)
                 .stopAndAdd(exampleSystem.setServo(1))
