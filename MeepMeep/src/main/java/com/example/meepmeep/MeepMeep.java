@@ -16,16 +16,25 @@ public class MeepMeep {
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
+                .setDimensions(18,18)
                 .build();
-
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(0, 0, Math.toRadians(0)))
-                .lineToX(30)
-                .waitSeconds(1)
-                .lineToX(0)
-                        .strafeTo(new Vector2d(30, 30))
+        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-30, -61.5, Math.toRadians(90)))
+                .strafeToLinearHeading(new Vector2d(-58,-58),Math.toRadians(45))
+                .waitSeconds(4)
+                .strafeToLinearHeading(new Vector2d(-34,-36),Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-35,-28.5),Math.toRadians(180))
+                .waitSeconds(3)
+                .strafeToLinearHeading(new Vector2d(-55,-55),Math.toRadians(45))
+                .waitSeconds(4)
+                .strafeToLinearHeading(new Vector2d(-44,-36),Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-45,-28.5),Math.toRadians(180))
+                .waitSeconds(3)
+                .strafeToLinearHeading(new Vector2d(-55,-55),Math.toRadians(45))
+                .waitSeconds(4)
+                .strafeToLinearHeading(new Vector2d(-55,-28.5),Math.toRadians(180))
+                .waitSeconds(3)
+                .strafeToLinearHeading(new Vector2d(-55,-55),Math.toRadians(45))
                 .build());
-
-
         meepMeep.setBackground(com.noahbres.meepmeep.MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_LIGHT)
                 .setDarkMode(false)
                 .setBackgroundAlpha(0.95f)

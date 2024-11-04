@@ -9,8 +9,12 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.GamepadEx;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
+import org.firstinspires.ftc.teamcode.systems.Bucket;
+import org.firstinspires.ftc.teamcode.systems.Elevator;
 import org.firstinspires.ftc.teamcode.systems.ExampleSystem;
+import org.firstinspires.ftc.teamcode.systems.Intake;
 import org.firstinspires.ftc.teamcode.systems.SlidingArm;
+import org.firstinspires.ftc.teamcode.systems.SwingingArm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +27,11 @@ public class TeleOpWithActions extends OpMode {
     public MecanumDrive drive;
     public ExampleSystem exampleSystem;
     public SlidingArm slidingArm;
+    public Elevator elevator;
+
+    public SwingingArm swingingArm;
+    public Intake intake;
+    public Bucket bucket;
 
     @Override
     public void init() {
@@ -31,8 +40,13 @@ public class TeleOpWithActions extends OpMode {
         drive=new MecanumDrive(hardwareMap, new Pose2d(0,0,0));
         exampleSystem = new ExampleSystem(hardwareMap);
         slidingArm = new SlidingArm(hardwareMap);
-
+        elevator = new Elevator(hardwareMap);
+        swingingArm = new SwingingArm(hardwareMap);
+        intake = new Intake(hardwareMap);
+        bucket = new Bucket(hardwareMap);
         runningActions.add(drive.driveAction(driver));
+        runningActions.add(intake.intakeControl(operator.gamepad));
+
     }
 
     @Override
@@ -41,19 +55,29 @@ public class TeleOpWithActions extends OpMode {
         driver.update();
         operator.update();
         packet.put("slidingArmPosition", slidingArm.getPosition());
+        packet.put("elevatorPosition", elevator.getPosition());
 
         //add actions as needed here, eg:
         if(driver.getButton(GamepadEx.Button.A).justPressed){
-            runningActions.add(exampleSystem.setServo(1));
+            runningActions.add(bucket.setServo(1));
         }
         if(driver.getButton(GamepadEx.Button.B).justPressed){
-            runningActions.add(exampleSystem.setServo(0));
+            runningActions.add(bucket.setServo(0));
+        }
+        if(driver.getButton(GamepadEx.Button.B).justPressed){
+            runningActions.add(bucket.setServo(0));
         }
         if(driver.getButton(GamepadEx.Button.X).justPressed){
-            runningActions.add(slidingArm.setPosition(900));
+            runningActions.add(slidingArm.setPosition(800));
         }
         if(driver.getButton(GamepadEx.Button.Y).justPressed){
             runningActions.add(slidingArm.setPosition(20));
+        }
+        if(driver.getButton(GamepadEx.Button.DPAD_UP).justPressed){
+            runningActions.add(slidingArm.setPosition(-40));
+        }
+        if(driver.getButton(GamepadEx.Button.DPAD_DOWN).justPressed){
+            runningActions.add(slidingArm.setPosition(0));
         }
 
 
