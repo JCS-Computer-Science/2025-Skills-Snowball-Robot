@@ -14,7 +14,7 @@ public class Elevator {
     public Elevator(HardwareMap hardwareMap){
         motor=hardwareMap.get(DcMotorEx.class,"elevator");
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+        motor.setPositionPIDFCoefficients(4);
     }
 
     public class SetPosition implements Action {
@@ -28,9 +28,9 @@ public class Elevator {
             if(!this.initialized){
                 motor.setTargetPosition(position);
                 motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                motor.setPower(0.8);
+                motor.setPower(1);
                 initialized=true;
-                telemetryPacket.addLine("Sliding arm moving to position "+position);
+                telemetryPacket.addLine("Elevator moving to position "+position);
             }
             if(this.position!=motor.getTargetPosition()){
                 //if another target got set by another action, stop this action

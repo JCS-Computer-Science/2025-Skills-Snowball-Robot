@@ -13,28 +13,30 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class SwingingArm {
     private DcMotorEx motor;
 
-    public SwingingArm(HardwareMap hardwareMap){
-        motor=hardwareMap.get(DcMotorEx.class,"swingingArm");
+    public SwingingArm(HardwareMap hardwareMap) {
+        motor = hardwareMap.get(DcMotorEx.class, "swingingArm");
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+motor.setPositionPIDFCoefficients(0.5);
     }
 
     public class SetPosition implements Action {
         private int position;
         private boolean initialized = false;
-        public SetPosition(int position){
-            this.position=position;
+
+        public SetPosition(int position) {
+            this.position = position;
         }
+
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            if(!this.initialized){
+            if (!this.initialized) {
                 motor.setTargetPosition(position);
                 motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                motor.setPower(0.8);
-                initialized=true;
-                telemetryPacket.addLine("Sliding arm moving to position "+position);
+                motor.setPower(0.4);
+                initialized = true;
+                telemetryPacket.addLine("Swinging arm moving to position " + position);
             }
-            if(this.position!=motor.getTargetPosition()){
+            if (this.position != motor.getTargetPosition()) {
                 //if another target got set by another action, stop this action
                 return false;
             }
@@ -42,10 +44,11 @@ public class SwingingArm {
         }
     }
 
-    public int getPosition(){
+    public int getPosition() {
         return motor.getCurrentPosition();
     }
-    public Action setPosition(int position){
+
+    public Action setPosition(int position) {
         return new SetPosition(position);
     }
 

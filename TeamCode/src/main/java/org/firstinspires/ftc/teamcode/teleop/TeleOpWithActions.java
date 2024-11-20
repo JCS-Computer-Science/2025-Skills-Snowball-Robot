@@ -56,30 +56,33 @@ public class TeleOpWithActions extends OpMode {
         operator.update();
         packet.put("slidingArmPosition", slidingArm.getPosition());
         packet.put("elevatorPosition", elevator.getPosition());
-
+        telemetry.addData("swingingArmPosition", swingingArm.getPosition());
+        telemetry.addData("elevatorPosition", elevator.getPosition());
         //add actions as needed here, eg:
-        if(driver.getButton(GamepadEx.Button.A).justPressed){
-            runningActions.add(bucket.setServo(1));
+        if(operator.getButton(GamepadEx.Button.A).justPressed){
+            runningActions.add(bucket.setServo(0.9));
         }
-        if(driver.getButton(GamepadEx.Button.B).justPressed){
+        if(operator.getButton(GamepadEx.Button.B).justPressed){
             runningActions.add(bucket.setServo(0));
         }
-        if(driver.getButton(GamepadEx.Button.B).justPressed){
-            runningActions.add(bucket.setServo(0));
+        if(operator.getButton(GamepadEx.Button.X).justPressed){
+            runningActions.add(slidingArm.setPosition(700));
         }
-        if(driver.getButton(GamepadEx.Button.X).justPressed){
-            runningActions.add(slidingArm.setPosition(800));
-        }
-        if(driver.getButton(GamepadEx.Button.Y).justPressed){
-            runningActions.add(slidingArm.setPosition(20));
-        }
-        if(driver.getButton(GamepadEx.Button.DPAD_UP).justPressed){
-            runningActions.add(slidingArm.setPosition(-40));
-        }
-        if(driver.getButton(GamepadEx.Button.DPAD_DOWN).justPressed){
+        if(operator.getButton(GamepadEx.Button.Y).justPressed){
             runningActions.add(slidingArm.setPosition(0));
         }
-
+        if(operator.getButton(GamepadEx.Button.DPAD_UP).justPressed){
+            runningActions.add(elevator.setPosition(-11200));
+        }
+        if(operator.getButton(GamepadEx.Button.DPAD_DOWN).justPressed){
+            runningActions.add(elevator.setPosition(-400));
+        }
+        if(operator.getButton(GamepadEx.Button.LEFT_BUMPER).justPressed){
+            runningActions.add(swingingArm.setPosition(0));
+        }
+        if(operator.getButton(GamepadEx.Button.RIGHT_BUMPER).justPressed){
+            runningActions.add(swingingArm.setPosition(-314));
+        }
 
         updateActions(packet);
     }
