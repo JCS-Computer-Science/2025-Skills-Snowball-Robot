@@ -14,7 +14,7 @@ public class Elevator {
     public Elevator(HardwareMap hardwareMap){
         motor=hardwareMap.get(DcMotorEx.class,"elevator");
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motor.setPositionPIDFCoefficients(4);
+        motor.setPositionPIDFCoefficients(8);
     }
 
     public class SetPosition implements Action {

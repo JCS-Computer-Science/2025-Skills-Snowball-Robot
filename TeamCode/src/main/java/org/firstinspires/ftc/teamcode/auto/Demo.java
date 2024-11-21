@@ -20,10 +20,6 @@ public class Demo extends LinearOpMode {
 //
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .lineToX(30)
-                .stopAndAdd(exampleSystem.setServo(1))
-                .waitSeconds(1)
-                .stopAndAdd(exampleSystem.setServo(0))
-                .lineToX(0)
                 .build()
         );
     }
