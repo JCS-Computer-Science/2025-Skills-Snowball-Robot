@@ -78,7 +78,7 @@ public class TeleOpWithActions extends OpMode {
             runningActions.add(elevator.setPosition(-400));
         }
         if(operator.getButton(GamepadEx.Button.LEFT_BUMPER).justPressed){
-            runningActions.add(swingingArm.setPosition(10));
+            runningActions.add(swingingArm.setPosition(-10));
         }
         if(operator.getButton(GamepadEx.Button.RIGHT_BUMPER).justPressed){
             runningActions.add(swingingArm.setPosition(-314));

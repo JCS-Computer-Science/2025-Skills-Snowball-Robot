@@ -29,6 +29,7 @@ public class SlidingArm {
 		public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 			if(!this.initialized){
 				motor.setTargetPosition(position);
+				motor.setTargetPositionTolerance(10);
 				motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 				motor.setPower(0.8);
 				initialized=true;
