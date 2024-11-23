@@ -19,7 +19,8 @@ public class Demo extends LinearOpMode {
 
 //
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .lineToX(30)
+                .waitSeconds(22)
+                .lineToX(60)
                 .build()
         );
     }
