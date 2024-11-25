@@ -59,11 +59,15 @@ public class TeleOpWithActions extends OpMode {
         telemetry.addData("swingingArmPosition", swingingArm.getPosition());
         telemetry.addData("elevatorPosition", elevator.getPosition());
         //add actions as needed here, eg:
+
+        if(driver.getButton(GamepadEx.Button.A).justPressed){
+            runningActions.add(drive.toggleSlowMode());
+        }
         if(operator.getButton(GamepadEx.Button.A).justPressed){
-            runningActions.add(bucket.setServo(0.8));
+            runningActions.add(bucket.setServo(0.58));
         }
         if(operator.getButton(GamepadEx.Button.B).justPressed){
-            runningActions.add(bucket.setServo(0.1));
+            runningActions.add(bucket.setServo(0));
         }
         if(operator.getButton(GamepadEx.Button.X).justPressed){
             runningActions.add(slidingArm.setPosition(700));
@@ -75,13 +79,13 @@ public class TeleOpWithActions extends OpMode {
             runningActions.add(elevator.setPosition(-11200));
         }
         if(operator.getButton(GamepadEx.Button.DPAD_DOWN).justPressed){
-            runningActions.add(elevator.setPosition(-100));
+            runningActions.add(elevator.setPosition(0));
         }
         if(operator.getButton(GamepadEx.Button.LEFT_BUMPER).justPressed){
             runningActions.add(swingingArm.setPosition(-10));
         }
         if(operator.getButton(GamepadEx.Button.RIGHT_BUMPER).justPressed){
-            runningActions.add(swingingArm.setPosition(-314));
+            runningActions.add(swingingArm.setPosition(-1160));
         }
 
         updateActions(packet);

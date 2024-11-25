@@ -90,7 +90,7 @@ public final class MecanumDrive {
     }
 
     public static Params PARAMS = new Params();
-
+    public boolean slowMode = false;
     public final MecanumKinematics kinematics = new MecanumKinematics(
             PARAMS.inPerTick * PARAMS.trackWidthTicks, PARAMS.inPerTick / PARAMS.lateralInPerTick);
 
@@ -407,18 +407,40 @@ public final class MecanumDrive {
         }
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            setDrivePowers(new PoseVelocity2d(
-                    new Vector2d(
-                            -driver.gamepad.left_stick_y,
-                            -driver.gamepad.left_stick_x
-                    ),
-                    -driver.gamepad.right_stick_x
-            ));
+            if(!slowMode) {
+                setDrivePowers(new PoseVelocity2d(
+                        new Vector2d(
+                                -driver.gamepad.left_stick_y,
+                                -driver.gamepad.left_stick_x
+                        ),
+                        -driver.gamepad.right_stick_x
+                ));
+            }else{
+                setDrivePowers(new PoseVelocity2d(
+                        new Vector2d(
+                                -driver.gamepad.left_stick_y*0.5,
+                                -driver.gamepad.left_stick_x *0.5
+                        ),
+                        -driver.gamepad.right_stick_x *0.5
+                ));
+            }
             return true;
         }
     }
     public DriveAction driveAction(GamepadEx gamepad){
         return new DriveAction(gamepad);
+    }
+
+    public Action toggleSlowMode(){
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                slowMode=!slowMode;
+                return false;
+            }
+        };
+
+
     }
 
 }
