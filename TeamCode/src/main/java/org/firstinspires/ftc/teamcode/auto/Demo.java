@@ -23,11 +23,11 @@ public class Demo extends LinearOpMode {
 
 //
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .stopAndAdd(elevator.setPosition(-11200))
+                .stopAndAdd(elevator.setPosition(Elevator.POSITION.TOP.ticks))
                 .lineToX(-20)
                 .stopAndAdd(bucket.setServo(0))
                 .waitSeconds(2)
-                .stopAndAdd(bucket.setServo(0.7))
+                .stopAndAdd(bucket.setServo(0.58))
                 .waitSeconds(1)
                 .lineToX(-10)
                 .stopAndAdd(elevator.setPosition(0))

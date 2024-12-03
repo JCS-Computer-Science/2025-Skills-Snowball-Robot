@@ -11,6 +11,17 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Elevator {
     private DcMotorEx motor;
 
+    public enum POSITION {
+        TOP(-4270),
+        BOTTOM(0);
+
+        public final int ticks;
+
+        POSITION(int ticks){
+            this.ticks=ticks;
+        }
+
+    }
     public Elevator(HardwareMap hardwareMap){
         motor=hardwareMap.get(DcMotorEx.class,"elevator");
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -19,10 +30,16 @@ public class Elevator {
 
     public class SetPosition implements Action {
         private int position;
+        private boolean wait;
         private boolean initialized = false;
-        public SetPosition(int position){
+        public SetPosition(int position, boolean wait){
             this.position=position;
+            this.wait = wait;
         }
+        public SetPosition(int position){
+            this(position, true);
+        }
+
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             if(!this.initialized){
@@ -36,7 +53,7 @@ public class Elevator {
                 //if another target got set by another action, stop this action
                 return false;
             }
-            return motor.isBusy();
+            return wait ? motor.isBusy() : false;
         }
     }
 
@@ -44,6 +61,9 @@ public class Elevator {
         return motor.getCurrentPosition();
     }
 
+    public Action setPosition(int position, boolean wait){
+        return new SetPosition(position, wait);
+    }
     public Action setPosition(int position){
         return new SetPosition(position);
     }

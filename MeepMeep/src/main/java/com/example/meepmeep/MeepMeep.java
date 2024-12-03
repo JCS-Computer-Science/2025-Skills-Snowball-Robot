@@ -18,24 +18,24 @@ public class MeepMeep {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .setDimensions(18,18)
                 .build();
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-30, -61.5, Math.toRadians(90)))
-                .strafeToLinearHeading(new Vector2d(-58,-58),Math.toRadians(45))
-                .waitSeconds(4)
-                .strafeToLinearHeading(new Vector2d(-34,-36),Math.toRadians(180))
-                .strafeToLinearHeading(new Vector2d(-35,-28.5),Math.toRadians(180))
-                .waitSeconds(3)
-                .strafeToLinearHeading(new Vector2d(-55,-55),Math.toRadians(45))
-                .waitSeconds(4)
-                .strafeToLinearHeading(new Vector2d(-44,-36),Math.toRadians(180))
-                .strafeToLinearHeading(new Vector2d(-45,-28.5),Math.toRadians(180))
-                .waitSeconds(3)
-                .strafeToLinearHeading(new Vector2d(-55,-55),Math.toRadians(45))
-                .waitSeconds(4)
-                .strafeToLinearHeading(new Vector2d(-55,-28.5),Math.toRadians(180))
-                .waitSeconds(3)
-                .strafeToLinearHeading(new Vector2d(-55,-55),Math.toRadians(45))
+        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-38, -61.5, Math.toRadians(0)))
+                //elevator up arms out
+                .strafeTo(new Vector2d(-50, -60))
+                //bucket dump then retract
+                //elevator down
+                .strafeToLinearHeading( new Vector2d(-50, -50), Math.toRadians(90))
+                //intake and forward
+                .strafeTo(new Vector2d(-50, -45))
+                //go to bucket
+                .strafeToLinearHeading( new Vector2d(-56.5, -56.5), Math.toRadians(45))
+                .strafeToLinearHeading( new Vector2d(-58, -50), Math.toRadians(90))
+                //intake and forward
+                .strafeTo(new Vector2d(-58, -45))
+                .strafeToLinearHeading( new Vector2d(-56.5, -56.5), Math.toRadians(45))
+                //park the robot
+                .strafeTo( new Vector2d(45, -55))
                 .build());
-        meepMeep.setBackground(com.noahbres.meepmeep.MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_LIGHT)
+                meepMeep.setBackground(com.noahbres.meepmeep.MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_LIGHT)
                 .setDarkMode(false)
                 .setBackgroundAlpha(0.95f)
                 .addEntity(myBot)

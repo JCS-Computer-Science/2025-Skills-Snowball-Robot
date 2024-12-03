@@ -16,7 +16,7 @@ public class SlidingArm {
 	public SlidingArm(HardwareMap hardwareMap){
 		motor=hardwareMap.get(DcMotorEx.class,"slidingArm");
 		motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+		motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 	}
 
 	public class SetPosition implements Action {
@@ -29,7 +29,7 @@ public class SlidingArm {
 		public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 			if(!this.initialized){
 				motor.setTargetPosition(position);
-				motor.setTargetPositionTolerance(10);
+				motor.setTargetPositionTolerance(15);
 				motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 				motor.setPower(0.8);
 				initialized=true;
@@ -39,7 +39,11 @@ public class SlidingArm {
 				//if another target got set by another action, stop this action
 				return false;
 			}
-			return motor.isBusy();
+			if(motor.isBusy()){
+				return true;
+			}
+			motor.setPower(0);
+			return false;
 		}
 	}
 
