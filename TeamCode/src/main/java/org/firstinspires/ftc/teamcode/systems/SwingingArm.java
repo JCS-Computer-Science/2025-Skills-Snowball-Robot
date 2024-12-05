@@ -21,10 +21,14 @@ motor.setPositionPIDFCoefficients(3);
 
     public class SetPosition implements Action {
         private int position;
+        private boolean wait;
         private boolean initialized = false;
-
-        public SetPosition(int position) {
-            this.position = position;
+        public SetPosition(int position, boolean wait){
+            this.position=position;
+            this.wait = wait;
+        }
+        public SetPosition(int position){
+            this(position, true);
         }
 
         @Override
@@ -41,7 +45,7 @@ motor.setPositionPIDFCoefficients(3);
                 //if another target got set by another action, stop this action
                 return false;
             }
-            return motor.isBusy();
+            return wait ? motor.isBusy() : false;
         }
     }
 
@@ -49,8 +53,11 @@ motor.setPositionPIDFCoefficients(3);
         return motor.getCurrentPosition();
     }
 
-    public Action setPosition(int position) {
-        return new SetPosition(position);
+    public Action setPosition(int position, boolean wait){
+        return new SwingingArm.SetPosition(position, wait);
+    }
+    public Action setPosition(int position){
+        return new SwingingArm.SetPosition(position);
     }
 
 }

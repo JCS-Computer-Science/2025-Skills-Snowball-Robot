@@ -21,9 +21,14 @@ public class SlidingArm {
 
 	public class SetPosition implements Action {
 		private int position;
+		private boolean wait;
 		private boolean initialized = false;
-		public SetPosition(int position){
+		public SetPosition(int position, boolean wait){
 			this.position=position;
+			this.wait = wait;
+		}
+		public SetPosition(int position){
+			this(position, true);
 		}
 		@Override
 		public boolean run(@NonNull TelemetryPacket telemetryPacket) {
@@ -39,19 +44,18 @@ public class SlidingArm {
 				//if another target got set by another action, stop this action
 				return false;
 			}
-			if(motor.isBusy()){
-				return true;
-			}
-			motor.setPower(0);
-			return false;
+			return wait ? motor.isBusy() : false;
 		}
 	}
 
 	public int getPosition(){
 		return motor.getCurrentPosition();
 	}
+	public Action setPosition(int position, boolean wait){
+		return new SlidingArm.SetPosition(position, wait);
+	}
 	public Action setPosition(int position){
-		return new SetPosition(position);
+		return new SlidingArm.SetPosition(position);
 	}
 
 }
