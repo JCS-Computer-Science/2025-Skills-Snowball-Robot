@@ -42,18 +42,23 @@ public class Elevator {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            if(!this.initialized){
+            if (!this.initialized) {
                 motor.setTargetPosition(position);
                 motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                 motor.setPower(1);
-                initialized=true;
-                telemetryPacket.addLine("Elevator moving to position "+position);
+                initialized = true;
+                telemetryPacket.addLine("Elevator moving to position " + position);
             }
-            if(this.position!=motor.getTargetPosition()){
+            if (this.position != motor.getTargetPosition()) {
                 //if another target got set by another action, stop this action
                 return false;
             }
-            return wait ? motor.isBusy() : false;
+            if (this.wait) {
+                return motor.isBusy();
+
+            } else {
+                return false;
+            }
         }
     }
 

@@ -54,10 +54,10 @@ motor.setPositionPIDFCoefficients(3);
     }
 
     public Action setPosition(int position, boolean wait){
-        return new SwingingArm.SetPosition(position, wait);
+        return new SetPosition(position, wait);
     }
     public Action setPosition(int position){
-        return new SwingingArm.SetPosition(position);
+        return new SetPosition(position);
     }
 
 }

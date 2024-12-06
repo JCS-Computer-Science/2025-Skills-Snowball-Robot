@@ -20,11 +20,13 @@ import org.firstinspires.ftc.teamcode.systems.Intake;
 import org.firstinspires.ftc.teamcode.systems.SlidingArm;
 import org.firstinspires.ftc.teamcode.systems.SwingingArm;
 
-@Autonomous(name="Two Block")
-public class TwoBlock extends LinearOpMode {
+@Autonomous(name="Auto with Park")
+public class AutoPark extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(-30, -61.5, Math.toRadians(0)));
+        Vector2d bucketPos = new Vector2d(-56.5, -56.5);
+        Double bucketHeading = Math.toRadians(45);
+        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(-38, -61.5, Math.toRadians(0)));
         ExampleSystem exampleSystem = new ExampleSystem(hardwareMap);
         SwingingArm swingingArm = new SwingingArm(hardwareMap);
         SlidingArm slidingArm = new SlidingArm(hardwareMap);
@@ -33,63 +35,55 @@ public class TwoBlock extends LinearOpMode {
         Intake intake = new Intake(hardwareMap);
         waitForStart();
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                //elevator up arms out
+                //start elevator up swinging down
                 .stopAndAdd(swingingArm.setPosition(-1160, false))
-                .stopAndAdd(slidingArm.setPosition(700, false))
                 .stopAndAdd(elevator.setPosition(Elevator.POSITION.TOP.ticks,false))
-                .strafeTo(new Vector2d(-50, -60))
+                //got to score position elevator up and score block 1
+                .strafeToLinearHeading(bucketPos,bucketHeading)
                 .stopAndAdd(elevator.setPosition(Elevator.POSITION.TOP.ticks))
-                //bucket dump then retract
                 .stopAndAdd(bucket.setServo(0))
                 .waitSeconds(1)
                 .stopAndAdd(bucket.setServo(0.58))
-                //elevator down
+                //elevator down and move to block 2
                 .stopAndAdd(elevator.setPosition(Elevator.POSITION.BOTTOM.ticks,false))
-                .stopAndAdd(swingingArm.setPosition(-1160))
-                .stopAndAdd(slidingArm.setPosition(700))
-                .strafeToLinearHeading( new Vector2d(-49, -50), Math.toRadians(90))
-                //intake and forward
+                .strafeToLinearHeading(new Vector2d(-32, -35),Math.toRadians(158))
+                //grab block 2
                 .stopAndAdd(intake.setServo(0))
-                .strafeTo(new Vector2d(-50, -45))
-                .waitSeconds(1)
-                .stopAndAdd(intake.setServo(0.5))
-                //go to bucket
-                .stopAndAdd(swingingArm.setPosition(-10))
-                .stopAndAdd(slidingArm.setPosition(30))
-                .strafeToLinearHeading( new Vector2d(-54, -56.5), Math.toRadians(45))
-                .stopAndAdd(elevator.setPosition(Elevator.POSITION.BOTTOM.ticks))
-                .stopAndAdd(intake.setServo(1))
-                .waitSeconds(2)
-                .stopAndAdd(intake.setServo(0.5))
-                .stopAndAdd(elevator.setPosition(Elevator.POSITION.TOP.ticks))
-                .stopAndAdd(slidingArm.setPosition(700,false))
-                .stopAndAdd(swingingArm.setPosition(-1160,false))
-                .stopAndAdd(bucket.setServo(0))
-                .waitSeconds(1)
-                .stopAndAdd(bucket.setServo(0.58))
-                .stopAndAdd(elevator.setPosition(Elevator.POSITION.BOTTOM.ticks, false))
-                .strafeToLinearHeading( new Vector2d(-58, -50), Math.toRadians(90))
-                //intake and forward
-                .stopAndAdd(intake.setServo(0))
-                .strafeTo(new Vector2d(-58, -45))
-                .waitSeconds(1)
-                .stopAndAdd(intake.setServo(0.5))
-                .stopAndAdd(elevator.setPosition(Elevator.POSITION.BOTTOM.ticks))
-                .stopAndAdd(slidingArm.setPosition(30,false))
-                .stopAndAdd(swingingArm.setPosition(-10))
-                .stopAndAdd(slidingArm.setPosition(30))
+                .stopAndAdd(slidingArm.setPosition(700, true))
                 .waitSeconds(0.5)
+                .stopAndAdd(intake.setServo(0.5))
+                //reset arms and put block in robot bucket
+                .stopAndAdd(swingingArm.setPosition(-10, false))
+                .stopAndAdd(slidingArm.setPosition(30, true))
+                .strafeToLinearHeading(bucketPos,bucketHeading)
                 .stopAndAdd(intake.setServo(1))
+                .waitSeconds(0.8)
+                .stopAndAdd(intake.setServo(0.5))
+                .stopAndAdd(elevator.setPosition(Elevator.POSITION.TOP.ticks,true))
+                .waitSeconds(2.5)
+                .stopAndAdd(bucket.setServo(0))
+                .waitSeconds(1)
+                .stopAndAdd(bucket.setServo(0.58))
+                .stopAndAdd(swingingArm.setPosition(-1160, false))
+                .stopAndAdd(elevator.setPosition(Elevator.POSITION.BOTTOM.ticks, false))
+                .strafeToLinearHeading(new Vector2d(-36, -28),Math.toRadians(180))
+                .stopAndAdd(intake.setServo(0))
+                .stopAndAdd(slidingArm.setPosition(700, true))
                 .waitSeconds(1)
                 .stopAndAdd(intake.setServo(0.5))
-                .strafeToLinearHeading( new Vector2d(-54, -56.5), Math.toRadians(45))
+                .stopAndAdd(swingingArm.setPosition(-10, false))
+                .stopAndAdd(slidingArm.setPosition(30,true))
+                .strafeToLinearHeading(bucketPos,bucketHeading)
+                .stopAndAdd(elevator.setPosition(Elevator.POSITION.BOTTOM.ticks, true))
+                .stopAndAdd(intake.setServo(1))
+                .waitSeconds(0.8)
+                .stopAndAdd(intake.setServo(0.5))
                 .stopAndAdd(elevator.setPosition(Elevator.POSITION.TOP.ticks))
                 .stopAndAdd(bucket.setServo(0))
                 .waitSeconds(1)
                 .stopAndAdd(bucket.setServo(0.58))
-                //park the robot
-                .stopAndAdd(elevator.setPosition(Elevator.POSITION.BOTTOM.ticks, false))
-                .strafeTo( new Vector2d(45, -55))
+                .stopAndAdd(elevator.setPosition(Elevator.POSITION.BOTTOM.ticks,false))
+                .strafeToLinearHeading(new Vector2d(45, -55),Math.toRadians(0))
                 .build());
     }
 }

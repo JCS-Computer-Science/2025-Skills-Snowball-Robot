@@ -34,7 +34,7 @@ public class SlidingArm {
 		public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 			if(!this.initialized){
 				motor.setTargetPosition(position);
-				motor.setTargetPositionTolerance(15);
+//				motor.setTargetPositionTolerance(15);
 				motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 				motor.setPower(0.8);
 				initialized=true;
@@ -44,7 +44,16 @@ public class SlidingArm {
 				//if another target got set by another action, stop this action
 				return false;
 			}
-			return wait ? motor.isBusy() : false;
+			if(wait){
+				if(motor.isBusy()){
+					return true;
+				}else{
+					//motor.setPower(0);
+					return false;
+				}
+			}else{
+				return false;
+			}
 		}
 	}
 
@@ -52,10 +61,10 @@ public class SlidingArm {
 		return motor.getCurrentPosition();
 	}
 	public Action setPosition(int position, boolean wait){
-		return new SlidingArm.SetPosition(position, wait);
+		return new SetPosition(position, wait);
 	}
 	public Action setPosition(int position){
-		return new SlidingArm.SetPosition(position);
+		return new SetPosition(position);
 	}
 
 }
