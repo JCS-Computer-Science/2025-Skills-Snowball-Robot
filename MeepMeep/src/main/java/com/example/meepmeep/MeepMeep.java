@@ -11,7 +11,7 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 public class MeepMeep {
     public static void main(String[] args) {
 
-        Vector2d bucketPos = new Vector2d(-56.5, -56.5);
+        Vector2d bucketPos = new Vector2d(-58.5, -57.5);
         Double bucketHeading = Math.toRadians(45);
 
         com.noahbres.meepmeep.MeepMeep meepMeep = new com.noahbres.meepmeep.MeepMeep(600);
