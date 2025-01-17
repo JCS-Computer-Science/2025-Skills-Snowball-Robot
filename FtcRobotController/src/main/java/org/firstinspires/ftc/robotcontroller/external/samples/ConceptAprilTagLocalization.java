@@ -1,3 +1,4 @@
+
 /* Copyright (c) 2024 Dryw Wade. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -41,6 +42,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
@@ -65,7 +67,7 @@ import java.util.List;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
 @TeleOp(name = "Concept: AprilTag Localization", group = "Concept")
-@Disabled
+//@Disabled
 public class ConceptAprilTagLocalization extends LinearOpMode {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
@@ -156,7 +158,7 @@ public class ConceptAprilTagLocalization extends LinearOpMode {
                 //.setDrawCubeProjection(false)
                 //.setDrawTagOutline(true)
                 //.setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
-                //.setTagLibrary(AprilTagGameDatabase.getCenterStageTagLibrary())
+                .setTagLibrary(AprilTagGameDatabase.getIntoTheDeepTagLibrary())
                 //.setOutputUnits(DistanceUnit.INCH, AngleUnit.DEGREES)
                 .setCameraPose(cameraPosition, cameraOrientation)
 

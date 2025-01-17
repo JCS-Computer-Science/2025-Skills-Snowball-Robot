@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.GamepadEx;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.systems.Bucket;
+import org.firstinspires.ftc.teamcode.systems.Claw;
 import org.firstinspires.ftc.teamcode.systems.Elevator;
 import org.firstinspires.ftc.teamcode.systems.ExampleSystem;
 import org.firstinspires.ftc.teamcode.systems.Intake;
@@ -32,6 +33,7 @@ public class TeleOpWithActions extends OpMode {
     public SwingingArm swingingArm;
     public Intake intake;
     public Bucket bucket;
+    public Claw claw;
 
     @Override
     public void init() {
@@ -44,6 +46,7 @@ public class TeleOpWithActions extends OpMode {
         swingingArm = new SwingingArm(hardwareMap);
         intake = new Intake(hardwareMap);
         bucket = new Bucket(hardwareMap);
+        claw = new Claw(hardwareMap);
         runningActions.add(drive.driveAction(driver));
         runningActions.add(intake.intakeControl(operator.gamepad));
 
@@ -59,34 +62,32 @@ public class TeleOpWithActions extends OpMode {
         telemetry.addData("swingingArmPosition", swingingArm.getPosition());
         telemetry.addData("elevatorPosition", elevator.getPosition());
         telemetry.addData("slidingPosition", slidingArm.getPosition());
+        telemetry.addData("clawPosition", claw.getPosition());
         //add actions as needed here, eg:
 
         if(driver.getButton(GamepadEx.Button.A).justPressed){
             runningActions.add(drive.toggleSlowMode());
         }
         if(operator.getButton(GamepadEx.Button.A).justPressed){
-            runningActions.add(bucket.setServo(0.58));
+                runningActions.add(bucket.setServo(0));
+        }
+        if(operator.getButton(GamepadEx.Button.Y).justPressed){
+            runningActions.add(claw.setServo(0.5));
         }
         if(operator.getButton(GamepadEx.Button.B).justPressed){
-            runningActions.add(bucket.setServo(0));
+            runningActions.add(claw.setServo(1));
         }
         if(operator.getButton(GamepadEx.Button.X).justPressed){
             runningActions.add(slidingArm.setPosition(700));
         }
-        if(operator.getButton(GamepadEx.Button.Y).justPressed){
-            runningActions.add(slidingArm.setPosition(30));
-        }
         if(operator.getButton(GamepadEx.Button.DPAD_UP).justPressed){
             runningActions.add(elevator.setPosition(Elevator.POSITION.TOP.ticks));
         }
-        if(operator.getButton(GamepadEx.Button.DPAD_DOWN).justPressed){
-            runningActions.add(elevator.setPosition(0));
-        }
-        if(operator.getButton(GamepadEx.Button.LEFT_BUMPER).justPressed){
-            runningActions.add(swingingArm.setPosition(-10));
-        }
         if(operator.getButton(GamepadEx.Button.RIGHT_BUMPER).justPressed){
             runningActions.add(swingingArm.setPosition(-1160));
+        }
+        if(operator.getButton(GamepadEx.Button.LEFT_BUMPER).justPressed){
+            runningActions.add(swingingArm.setPosition(-1100));
         }
 
         updateActions(packet);

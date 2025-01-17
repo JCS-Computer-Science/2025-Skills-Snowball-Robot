@@ -33,7 +33,11 @@ public class SlidingArm {
 		@Override
 		public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 			if(!this.initialized){
-				motor.setTargetPosition(position);
+				if (motor.getTargetPosition() == position){
+					motor.setTargetPosition(30);
+				} else {
+					motor.setTargetPosition(position);
+				}
 //				motor.setTargetPositionTolerance(15);
 				motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 				motor.setPower(0.8);

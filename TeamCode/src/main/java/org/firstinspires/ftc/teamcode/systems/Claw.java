@@ -8,16 +8,16 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class Bucket {
+public class Claw {
 
 
     private Servo servo;
 
-    public Bucket(HardwareMap hardwareMap){
+    public Claw(HardwareMap hardwareMap){
 
-        servo=hardwareMap.get(Servo.class,"bucket");
+        servo=hardwareMap.get(Servo.class,"Claw");
     }
-
+    public double getPosition(){return servo.getPosition();}
     public class SetServo implements Action {
         private double position;
         private boolean initialized = false;
@@ -26,15 +26,13 @@ public class Bucket {
         }
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            if(!this.initialized){
+
                 if(servo.getPosition() == position) {
-                    servo.setPosition(0.58);
+                    servo.setPosition(0.3);
                 } else {
                     servo.setPosition(position);
                 }
-                } else {
-                initialized=true;
-            }
+
             return false;
         }
     }

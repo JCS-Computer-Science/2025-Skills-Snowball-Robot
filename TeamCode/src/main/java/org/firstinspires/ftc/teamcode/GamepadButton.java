@@ -12,7 +12,7 @@ public class GamepadButton {
         this.isHeld=this.oldState&&state;
         this.justReleased=this.oldState&&!state;
 
-        this.oldState=this.isPressed;
+        this.oldState=state;
         this.isPressed=state;
     }
 }

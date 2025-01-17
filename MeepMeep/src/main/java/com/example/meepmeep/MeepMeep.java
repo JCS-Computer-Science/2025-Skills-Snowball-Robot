@@ -23,9 +23,9 @@ public class MeepMeep {
                 .build();
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-38, -61.5, Math.toRadians(0)))
                 .strafeToLinearHeading(bucketPos,bucketHeading)
-                .strafeToLinearHeading(new Vector2d(-32, -35),Math.toRadians(158))
+                .strafeToLinearHeading(new Vector2d(-53, -41),Math.toRadians(90))
                 .strafeToLinearHeading(bucketPos,bucketHeading)
-                .strafeToLinearHeading(new Vector2d(-36, -28),Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-60, -41),Math.toRadians(90))
                 .strafeToLinearHeading(bucketPos,bucketHeading)
                 .strafeToLinearHeading(new Vector2d(-46, -28),Math.toRadians(180))
                 .strafeToLinearHeading(bucketPos,bucketHeading)

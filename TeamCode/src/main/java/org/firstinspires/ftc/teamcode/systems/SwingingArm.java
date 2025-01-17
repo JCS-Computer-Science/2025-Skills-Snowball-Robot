@@ -34,7 +34,11 @@ motor.setPositionPIDFCoefficients(3);
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             if (!this.initialized) {
-                motor.setTargetPosition(position);
+                if (motor.getTargetPosition() == position){
+                    motor.setTargetPosition(-10);
+                } else {
+                    motor.setTargetPosition(position);
+                }
                 motor.setTargetPositionTolerance(5);
                 motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                 motor.setPower(1);

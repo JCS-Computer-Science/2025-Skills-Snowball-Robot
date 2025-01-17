@@ -43,7 +43,11 @@ public class Elevator {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             if (!this.initialized) {
-                motor.setTargetPosition(position);
+                if (motor.getTargetPosition() == position){
+                    motor.setTargetPosition(0);
+                } else {
+                    motor.setTargetPosition(position);
+                }
                 motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                 motor.setPower(1);
                 initialized = true;
