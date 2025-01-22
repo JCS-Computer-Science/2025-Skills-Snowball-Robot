@@ -75,7 +75,7 @@ public class TeleOpWithActions extends OpMode {
             runningActions.add(claw.setServo(0.5));
         }
         if(operator.getButton(GamepadEx.Button.B).justPressed){
-            runningActions.add(claw.setServo(1));
+            runningActions.add(claw.setServo(0.8));
         }
         if(operator.getButton(GamepadEx.Button.X).justPressed){
             runningActions.add(slidingArm.setPosition(700));
@@ -87,7 +87,7 @@ public class TeleOpWithActions extends OpMode {
             runningActions.add(swingingArm.setPosition(-1160));
         }
         if(operator.getButton(GamepadEx.Button.LEFT_BUMPER).justPressed){
-            runningActions.add(swingingArm.setPosition(-1100));
+            runningActions.add(swingingArm.setPosition(-1070));
         }
 
         updateActions(packet);
