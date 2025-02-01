@@ -25,8 +25,8 @@ import org.firstinspires.ftc.teamcode.systems.SwingingArm;
 public class AutoPark extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Vector2d bucketPos = new Vector2d(-56.5, -56.5);
-        Double bucketHeading = Math.toRadians(45);
+        Vector2d bucketPos = new Vector2d(-58.5, -57.5);
+        double bucketHeading = Math.toRadians(45);
         MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(-38, -61.5, Math.toRadians(0)));
         ExampleSystem exampleSystem = new ExampleSystem(hardwareMap);
         SwingingArm swingingArm = new SwingingArm(hardwareMap);
@@ -51,7 +51,7 @@ public class AutoPark extends LinearOpMode {
                 .stopAndAdd(bucket.setServo(0.58))
                 //elevator down and move to block 2
                 .stopAndAdd(elevator.setPosition(Elevator.POSITION.BOTTOM.ticks, false))
-                .strafeToLinearHeading(new Vector2d(-53, -43),Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(-51, -44),Math.toRadians(90))
                 .waitSeconds(0.5)
                 .stopAndAdd(claw.setServo(0.3))
                 .waitSeconds(0.5)
@@ -66,12 +66,12 @@ public class AutoPark extends LinearOpMode {
                 .stopAndAdd(bucket.setServo(0.58))
                 .stopAndAdd(elevator.setPosition(Elevator.POSITION.BOTTOM.ticks, false))
                 .stopAndAdd(swingingArm.setPosition(-1070))
-                .strafeToLinearHeading(new Vector2d(-61, -43.5),Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(-61,-45),Math.toRadians(90))
                 .waitSeconds(0.5)
                 .stopAndAdd(claw.setServo(0.3))
                 .waitSeconds(0.5)
                 .stopAndAdd(swingingArm.setPosition(-30))
-                .strafeToLinearHeading(bucketPos.plus(new Vector2d(3,0)),bucketHeading)
+                .strafeToLinearHeading(bucketPos.plus(new Vector2d(0.8,-1.8)),bucketHeading)
                 .stopAndAdd(claw.setServo(0.8))
                 .waitSeconds(0.5)
                 .stopAndAdd(elevator.setPosition(Elevator.POSITION.TOP.ticks, false))
