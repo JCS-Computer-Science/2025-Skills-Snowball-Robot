@@ -16,6 +16,7 @@ public class Claw {
     public Claw(HardwareMap hardwareMap){
 
         servo=hardwareMap.get(Servo.class,"Claw");
+        servo.setPosition(0.3);
     }
     public double getPosition(){return servo.getPosition();}
     public class SetServo implements Action {

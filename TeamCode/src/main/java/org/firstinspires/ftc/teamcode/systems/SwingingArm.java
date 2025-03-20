@@ -16,7 +16,9 @@ public class SwingingArm {
     public SwingingArm(HardwareMap hardwareMap) {
         motor = hardwareMap.get(DcMotorEx.class, "swingingArm");
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-motor.setPositionPIDFCoefficients(3);
+        motor.setPositionPIDFCoefficients(3);
+        motor.setTargetPosition(0);
+        motor.setTargetPositionTolerance(20);
     }
 
     public class SetPosition implements Action {
@@ -35,7 +37,7 @@ motor.setPositionPIDFCoefficients(3);
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             if (!this.initialized) {
                 if (motor.getTargetPosition() == position){
-                    motor.setTargetPosition(-10);
+                    motor.setTargetPosition(0);
                 } else {
                     motor.setTargetPosition(position);
                 }
@@ -62,6 +64,16 @@ motor.setPositionPIDFCoefficients(3);
     }
     public Action setPosition(int position){
         return new SetPosition(position);
+    }
+
+    public Action resetEncoder(){
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                return false;
+            }
+        };
     }
 
 }

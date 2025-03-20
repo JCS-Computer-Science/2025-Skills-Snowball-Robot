@@ -34,7 +34,7 @@ public class SlidingArm {
 		public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 			if(!this.initialized){
 				if (motor.getTargetPosition() == position){
-					motor.setTargetPosition(30);
+					motor.setTargetPosition(0);
 				} else {
 					motor.setTargetPosition(position);
 				}

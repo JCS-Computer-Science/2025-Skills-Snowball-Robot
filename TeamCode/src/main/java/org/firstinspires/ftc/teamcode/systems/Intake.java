@@ -17,8 +17,11 @@ public class Intake {
     public Intake(HardwareMap hardwareMap){
 
         servo=hardwareMap.get(Servo.class,"intake");
+        //90deg left=0.6
     }
-
+    public double getPosition(){
+        return servo.getPosition();
+    }
     public class SetServo implements Action {
         private double position;
         private boolean initialized = false;
@@ -48,7 +51,7 @@ public class Intake {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            servo.setPosition((controller.right_trigger-controller.left_trigger+1)/2);
+            servo.setPosition(Math.max(0,Math.min(1,(controller.right_trigger-controller.left_trigger+1)*0.5)));
             return true;
         }
     }

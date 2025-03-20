@@ -49,7 +49,7 @@ public class AutoPrep extends LinearOpMode {
                 .strafeToLinearHeading(new Vector2d(-32, -35),Math.toRadians(158))
                 //grab block 2
                 .stopAndAdd(intake.setServo(0))
-                .stopAndAdd(slidingArm.setPosition(700, true))
+                .stopAndAdd(slidingArm.setPosition(1185, true))
                 .waitSeconds(1)
                 .stopAndAdd(intake.setServo(0.5))
                 //reset arms and put block in robot bucket
@@ -64,7 +64,6 @@ public class AutoPrep extends LinearOpMode {
                 .stopAndAdd(bucket.setServo(0))
                 .waitSeconds(1)
                 .stopAndAdd(bucket.setServo(0.58))
-                .stopAndAdd(swingingArm.setPosition(-1160))//false
                 .stopAndAdd(elevator.setPosition(Elevator.POSITION.BOTTOM.ticks, true))
                 .strafeToLinearHeading(new Vector2d(-36, -28),Math.toRadians(180))
                 .stopAndAdd(intake.setServo(0))

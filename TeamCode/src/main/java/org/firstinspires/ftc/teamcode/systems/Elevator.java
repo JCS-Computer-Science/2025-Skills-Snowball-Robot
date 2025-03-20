@@ -12,7 +12,7 @@ public class Elevator {
     private DcMotorEx motor;
 
     public enum POSITION {
-        TOP(-4270),
+        TOP(-3100),
         BOTTOM(0);
 
         public final int ticks;
@@ -24,6 +24,10 @@ public class Elevator {
     }
     public Elevator(HardwareMap hardwareMap){
         motor=hardwareMap.get(DcMotorEx.class,"elevator");
+        if(motor.getCurrentPosition()>-100){
+            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        }
+        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motor.setTargetPosition(motor.getCurrentPosition());
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motor.setPositionPIDFCoefficients(8);
@@ -44,11 +48,10 @@ public class Elevator {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             if (!this.initialized) {
-                if (motor.getTargetPosition() == position){
-                    motor.setTargetPosition(0);
-                } else {
-                    motor.setTargetPosition(position);
-                }
+
+                motor.setTargetPosition(position);
+                motor.setTargetPositionTolerance(30);
+
                 motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                 motor.setPower(1);
                 initialized = true;
@@ -59,7 +62,17 @@ public class Elevator {
                 return false;
             }
             if (this.wait) {
-                return motor.isBusy();
+                if(motor.isBusy()){
+                    return true;
+                }else{
+                    if (position ==POSITION.BOTTOM.ticks) {
+                        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        motor.setPower(0);
+                    }
+
+                    return false;
+                }
+
 
             } else {
                 return false;
