@@ -21,26 +21,18 @@ public class SlidingArm {
 
 	public class SetPosition implements Action {
 		private int position;
-		private boolean wait;
 		private boolean initialized = false;
-		public SetPosition(int position, boolean wait){
-			this.position=position;
-			this.wait = wait;
-		}
 		public SetPosition(int position){
-			this(position, true);
+			this.position=position;
 		}
+
 		@Override
 		public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 			if(!this.initialized){
-				if (motor.getTargetPosition() == position){
-					motor.setTargetPosition(0);
-				} else {
-					motor.setTargetPosition(position);
-				}
-//				motor.setTargetPositionTolerance(15);
+
+				motor.setTargetPosition(position);
 				motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-				motor.setPower(0.8);
+				motor.setPower(1);
 				initialized=true;
 				telemetryPacket.addLine("Sliding arm moving to position "+position);
 			}
@@ -48,24 +40,20 @@ public class SlidingArm {
 				//if another target got set by another action, stop this action
 				return false;
 			}
-			if(wait){
-				if(motor.isBusy()){
-					return true;
-				}else{
-					//motor.setPower(0);
-					return false;
-				}
+
+			if(motor.isBusy()){
+				return true;
 			}else{
+				motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+				motor.setPower(0);
 				return false;
 			}
+
 		}
 	}
 
 	public int getPosition(){
 		return motor.getCurrentPosition();
-	}
-	public Action setPosition(int position, boolean wait){
-		return new SetPosition(position, wait);
 	}
 	public Action setPosition(int position){
 		return new SetPosition(position);

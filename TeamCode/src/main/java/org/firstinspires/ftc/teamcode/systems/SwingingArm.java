@@ -23,24 +23,17 @@ public class SwingingArm {
 
     public class SetPosition implements Action {
         private int position;
-        private boolean wait;
+
         private boolean initialized = false;
-        public SetPosition(int position, boolean wait){
-            this.position=position;
-            this.wait = wait;
-        }
         public SetPosition(int position){
-            this(position, true);
+            this.position=position;
         }
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             if (!this.initialized) {
-                if (motor.getTargetPosition() == position){
-                    motor.setTargetPosition(0);
-                } else {
-                    motor.setTargetPosition(position);
-                }
+
+                motor.setTargetPosition(position);
                 motor.setTargetPositionTolerance(5);
                 motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                 motor.setPower(1);
@@ -51,7 +44,7 @@ public class SwingingArm {
                 //if another target got set by another action, stop this action
                 return false;
             }
-            return wait ? motor.isBusy() : false;
+            return motor.isBusy();
         }
     }
 
@@ -59,9 +52,7 @@ public class SwingingArm {
         return motor.getCurrentPosition();
     }
 
-    public Action setPosition(int position, boolean wait){
-        return new SetPosition(position, wait);
-    }
+
     public Action setPosition(int position){
         return new SetPosition(position);
     }

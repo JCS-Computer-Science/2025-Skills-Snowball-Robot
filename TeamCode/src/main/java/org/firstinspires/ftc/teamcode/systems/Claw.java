@@ -9,14 +9,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Claw {
-
-
     private Servo servo;
-
     public Claw(HardwareMap hardwareMap){
-
         servo=hardwareMap.get(Servo.class,"Claw");
-        servo.setPosition(0.3);
+        servo.setPosition(0);
     }
     public double getPosition(){return servo.getPosition();}
     public class SetServo implements Action {
@@ -27,17 +23,10 @@ public class Claw {
         }
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-
-                if(servo.getPosition() == position) {
-                    servo.setPosition(0.3);
-                } else {
-                    servo.setPosition(position);
-                }
-
+            servo.setPosition(position);
             return false;
         }
     }
-
     public Action setServo(double position){
         return new SetServo(position);
     }

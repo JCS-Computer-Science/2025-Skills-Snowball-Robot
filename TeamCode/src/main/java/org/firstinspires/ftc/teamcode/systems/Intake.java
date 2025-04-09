@@ -10,12 +10,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Intake {
-
-
     private Servo servo;
-
     public Intake(HardwareMap hardwareMap){
-
         servo=hardwareMap.get(Servo.class,"intake");
         //90deg left=0.6
     }
@@ -55,6 +51,5 @@ public class Intake {
             return true;
         }
     }
-
     public Action intakeControl(Gamepad c){return new IntakeControl(c);}
 }

@@ -10,6 +10,19 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class ExampleSystem {
 
+    public enum POSITION {
+        OPEN(1),
+        MIDDLE(0.5),
+
+        CLOSED(0);
+
+        public final double position;
+
+        POSITION(double position){
+            this.position=position;
+        }
+
+    }
 
     private Servo servo;
 

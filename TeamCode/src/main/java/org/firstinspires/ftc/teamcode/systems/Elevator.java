@@ -35,14 +35,11 @@ public class Elevator {
 
     public class SetPosition implements Action {
         private int position;
-        private boolean wait;
+
         private boolean initialized = false;
-        public SetPosition(int position, boolean wait){
-            this.position=position;
-            this.wait = wait;
-        }
+
         public SetPosition(int position){
-            this(position, true);
+            this.position=position;
         }
 
         @Override
@@ -61,20 +58,11 @@ public class Elevator {
                 //if another target got set by another action, stop this action
                 return false;
             }
-            if (this.wait) {
-                if(motor.isBusy()){
-                    return true;
-                }else{
-                    if (position ==POSITION.BOTTOM.ticks) {
-                        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                        motor.setPower(0);
-                    }
-
-                    return false;
-                }
-
-
-            } else {
+            if(motor.isBusy()){
+                return true;
+            }else{
+                motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                motor.setPower(0);
                 return false;
             }
         }
@@ -84,9 +72,6 @@ public class Elevator {
         return motor.getCurrentPosition();
     }
 
-    public Action setPosition(int position, boolean wait){
-        return new SetPosition(position, wait);
-    }
     public Action setPosition(int position){
         return new SetPosition(position);
     }
