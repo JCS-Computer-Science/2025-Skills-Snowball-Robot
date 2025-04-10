@@ -1,11 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
+import androidx.annotation.NonNull;
+
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.DualNum;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.PoseVelocity2dDual;
 import com.acmerobotics.roadrunner.TankKinematics;
 import com.acmerobotics.roadrunner.Time;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.LynxFirmware;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -18,6 +23,7 @@ import java.util.List;
 
 @Config
 public final class TankDrive {
+    public boolean slowMode = false;
     public final List<DcMotorEx> leftMotors, rightMotors;
     public final VoltageSensor voltageSensor;
     public TankDrive(HardwareMap hardwareMap) {
@@ -62,8 +68,49 @@ public final class TankDrive {
             m.setPower(wheelVels.right.get(0) / maxPowerMag);
         }
     }
+    private final class DriveAction implements Action {
+        GamepadEx driver;
+
+        public DriveAction(GamepadEx gamepad){
+            driver=gamepad;
+        }
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            if(!slowMode) {
+                setDrivePowers(new PoseVelocity2d(
+                        new Vector2d(
+                                -driver.gamepad.right_trigger - driver.gamepad.left_trigger,
+                                -0
+                        ),
+                        -driver.gamepad.right_stick_x
+                ));
+            }else{
+                setDrivePowers(new PoseVelocity2d(
+                        new Vector2d(
+                                -(driver.gamepad.right_trigger - driver.gamepad.left_trigger)*0.5,
+                                -0
+                        ),
+                        -driver.gamepad.right_stick_x *0.5
+                ));
+            }
+            return true;
+        }
+    }
+    public DriveAction driveAction(GamepadEx gamepad){
+        return new DriveAction(gamepad);
+    }
+
+    public Action toggleSlowMode(){
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                slowMode=!slowMode;
+                return false;
+            }
+        };
 
 
+    }
 
 
 
