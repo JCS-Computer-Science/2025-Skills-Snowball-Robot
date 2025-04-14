@@ -15,6 +15,7 @@ import com.acmerobotics.roadrunner.ftc.LynxFirmware;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
@@ -46,7 +47,7 @@ public final class TankDrive {
         }
 
         // TODO: reverse motor directions if needed
-        //   leftMotors.get(0).setDirection(DcMotorSimple.Direction.REVERSE);
+        rightMotors.get(0).setDirection(DcMotorSimple.Direction.REVERSE);
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
@@ -79,10 +80,10 @@ public final class TankDrive {
             if(!slowMode) {
                 setDrivePowers(new PoseVelocity2d(
                         new Vector2d(
-                                -driver.gamepad.right_trigger - driver.gamepad.left_trigger,
+                                -(driver.gamepad.right_trigger - driver.gamepad.left_trigger),
                                 -0
                         ),
-                        -driver.gamepad.right_stick_x
+                        driver.gamepad.right_stick_x * 0.5
                 ));
             }else{
                 setDrivePowers(new PoseVelocity2d(
@@ -90,7 +91,7 @@ public final class TankDrive {
                                 -(driver.gamepad.right_trigger - driver.gamepad.left_trigger)*0.5,
                                 -0
                         ),
-                        -driver.gamepad.right_stick_x *0.5
+                        driver.gamepad.right_stick_x * 0.25
                 ));
             }
             return true;
