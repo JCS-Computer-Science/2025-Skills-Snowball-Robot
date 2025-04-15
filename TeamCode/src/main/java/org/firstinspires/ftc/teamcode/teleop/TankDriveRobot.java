@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.GamepadEx;
 import org.firstinspires.ftc.teamcode.TankDrive;
 
+import org.firstinspires.ftc.teamcode.systems.BlockIntake;
 import org.firstinspires.ftc.teamcode.systems.Elevator;
 import org.firstinspires.ftc.teamcode.systems.ExampleSystem;
 
@@ -23,16 +24,19 @@ public class TankDriveRobot extends OpMode {
     public TankDrive drive;
     public ExampleSystem exampleSystem;
     public Elevator elevator;
+    public BlockIntake intake;
 
 
     @Override
     public void init() {
         driver=new GamepadEx(gamepad1);
         drive=new TankDrive(hardwareMap);
+        intake=new BlockIntake(hardwareMap);
         //exampleSystem = new ExampleSystem(hardwareMap);
         //elevator = new Elevator(hardwareMap);
 
         runningActions.add(drive.driveAction(driver));
+        runningActions.add(intake.runServos());
     }
 
     @Override
@@ -45,6 +49,10 @@ public class TankDriveRobot extends OpMode {
         //add actions as needed here, eg:
         if(driver.getButton(GamepadEx.Button.A).justPressed){
             runningActions.add(drive.toggleSlowMode());
+        }
+        if(driver.getButton(GamepadEx.Button.B).justPressed){
+            runningActions.add(intake.toggleRun());
+            telemetry.addData("intake on? ", intake.running);
         }
 
         updateActions(packet);
