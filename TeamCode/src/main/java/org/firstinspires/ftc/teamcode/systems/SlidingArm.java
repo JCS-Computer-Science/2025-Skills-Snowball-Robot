@@ -55,6 +55,7 @@ public class SlidingArm {
 	public int getPosition(){
 		return motor.getCurrentPosition();
 	}
+	public int getTarPosition(){return motor.getTargetPosition();}
 	public Action setPosition(int position){
 		return new SetPosition(position);
 	}
