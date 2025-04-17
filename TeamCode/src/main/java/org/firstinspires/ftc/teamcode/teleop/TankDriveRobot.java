@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.GamepadEx;
 import org.firstinspires.ftc.teamcode.TankDrive;
 
+import org.firstinspires.ftc.teamcode.systems.BlockDump;
 import org.firstinspires.ftc.teamcode.systems.BlockIntake;
 import org.firstinspires.ftc.teamcode.systems.Elevator;
 import org.firstinspires.ftc.teamcode.systems.ExampleSystem;
@@ -27,9 +28,12 @@ public class TankDriveRobot extends OpMode {
     public Elevator elevator;
     public BlockIntake intake;
     public SlidingArm slide;
-    private int armInPos = 0;
-    private int armOutPos = 0;
-    private int armHoldPos = 0;
+    public BlockDump swing;
+    public int armInPos = 0;
+    public int armOutPos = 1000;
+    public int armHoldPos = 700;
+    public int swingIn = 0;
+    public int swingOut = 2000;
 
 
     @Override
@@ -38,8 +42,11 @@ public class TankDriveRobot extends OpMode {
         drive=new TankDrive(hardwareMap);
         intake=new BlockIntake(hardwareMap);
         slide=new SlidingArm(hardwareMap);
+        swing=new BlockDump(hardwareMap);
         runningActions.add(drive.driveAction(driver));
         runningActions.add(intake.runServos());
+        runningActions.add(slide.setPosition(armInPos));
+        runningActions.add(swing.setPosition(swingIn));
     }
 
     @Override
@@ -56,19 +63,25 @@ public class TankDriveRobot extends OpMode {
         }
         if(driver.getButton(GamepadEx.Button.LEFT_BUMPER).justPressed){
             if(slide.getTarPosition() == armOutPos){
-                slide.setPosition(armInPos);
+                runningActions.add(slide.setPosition(armInPos));
             }else{
-                slide.setPosition(armOutPos);
+                runningActions.add(slide.setPosition(armOutPos));
             }
         }
         if(driver.getButton(GamepadEx.Button.RIGHT_BUMPER).justPressed){
             if(slide.getTarPosition() == armOutPos){
-                slide.setPosition(armHoldPos);
+                runningActions.add(slide.setPosition(armHoldPos));
             }else{
-                slide.setPosition(armOutPos);
+                runningActions.add(slide.setPosition(armOutPos));
             }
         }
-
+        if(driver.getButton(GamepadEx.Button.X).justPressed){
+            if(swing.getTarPosition() == swingOut){
+                runningActions.add(swing.setPosition(swingIn));
+            }else{
+                runningActions.add(swing.setPosition(swingOut));
+            }
+        }
         updateActions(packet);
     }
 
