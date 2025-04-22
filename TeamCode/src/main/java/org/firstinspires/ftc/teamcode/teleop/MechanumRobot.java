@@ -10,9 +10,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.GamepadEx;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
-import org.firstinspires.ftc.teamcode.systems.Elevator;
 import org.firstinspires.ftc.teamcode.systems.ExampleSystem;
-;
+import org.firstinspires.ftc.teamcode.systems.BallIntake;
+import org.firstinspires.ftc.teamcode.systems.BallShooter;
+import org.firstinspires.ftc.teamcode.systems.HopperDoor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,9 @@ public class MechanumRobot extends OpMode {
     public GamepadEx driver;
     public MecanumDrive drive;
     public ExampleSystem exampleSystem;
-    public Elevator elevator;
+    public BallIntake ballIntake;
+    public BallShooter ballShooter;
+    public HopperDoor hopperDoor;
 
 
     @Override
@@ -32,9 +35,12 @@ public class MechanumRobot extends OpMode {
         driver=new GamepadEx(gamepad1);
         drive=new MecanumDrive(hardwareMap, new Pose2d(0,0,0));
         exampleSystem = new ExampleSystem(hardwareMap);
-        elevator = new Elevator(hardwareMap);
+//        ballIntake = new BallIntake(hardwareMap);
+//        ballShooter = new BallShooter(hardwareMap);
+//        hopperDoor = new HopperDoor(hardwareMap);
 
         runningActions.add(drive.driveAction(driver));
+//        runningActions.add(hopperDoor.runServo());
     }
 
     @Override
@@ -42,13 +48,31 @@ public class MechanumRobot extends OpMode {
         TelemetryPacket packet = new TelemetryPacket();
         driver.update();
 
-        telemetry.addData("elevatorPosition", elevator.getPosition());
-
         //add actions as needed here, eg:
         if(driver.getButton(GamepadEx.Button.A).justPressed){
             runningActions.add(drive.toggleSlowMode());
         }
 
+//        if(driver.getButton(GamepadEx.Button.B).justPressed){
+//            runningActions.add(ballIntake.toggleIntake());
+//        }
+//
+//        if(driver.getButton(GamepadEx.Button.DPAD_LEFT).justPressed){
+//            runningActions.add(ballShooter.modeOff());
+//        }
+//        if(driver.getButton(GamepadEx.Button.DPAD_DOWN).justPressed){
+//            runningActions.add(ballShooter.modeLow());
+//        }
+//        if(driver.getButton(GamepadEx.Button.DPAD_RIGHT).justPressed){
+//            runningActions.add(ballShooter.modeMed());
+//        }
+//        if(driver.getButton(GamepadEx.Button.DPAD_UP).justPressed){
+//            runningActions.add(ballShooter.modeHigh());
+//        }
+//
+//        if(driver.getButton(GamepadEx.Button.X).justPressed){
+//            runningActions.add(hopperDoor.toggleOpen());
+//        }
         updateActions(packet);
     }
 
