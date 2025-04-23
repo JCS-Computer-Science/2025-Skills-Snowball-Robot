@@ -61,6 +61,9 @@ public class TankDriveRobot extends OpMode {
             runningActions.add(intake.toggleRun());
             telemetry.addData("intake on? ", intake.running);
         }
+        if(driver.getButton(GamepadEx.Button.Y).justPressed){
+            runningActions.add(intake.flipServos());
+        }
         if(driver.getButton(GamepadEx.Button.LEFT_BUMPER).justPressed){
             if(slide.getTarPosition() == armOutPos){
                 runningActions.add(slide.setPosition(armInPos));

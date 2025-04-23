@@ -34,7 +34,6 @@ public class MechanumRobot extends OpMode {
     public void init() {
         driver=new GamepadEx(gamepad1);
         drive=new MecanumDrive(hardwareMap, new Pose2d(0,0,0));
-        exampleSystem = new ExampleSystem(hardwareMap);
 //        ballIntake = new BallIntake(hardwareMap);
 //        ballShooter = new BallShooter(hardwareMap);
 //        hopperDoor = new HopperDoor(hardwareMap);

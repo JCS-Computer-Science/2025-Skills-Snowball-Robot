@@ -12,6 +12,8 @@ public class BlockIntake {
     public Boolean running = false;
     private Servo left;
     private Servo right;
+    public double leftSpeed = 1;
+    public double rightSpeed = 0;
 
     public BlockIntake(HardwareMap hardwareMap){
         left=hardwareMap.get(Servo.class,"intakeLeft");
@@ -26,10 +28,25 @@ public class BlockIntake {
                     left.setPosition(0.5);
                     right.setPosition(0.5);
                 } else {
-                    left.setPosition(1);
-                    right.setPosition(0);
+                    left.setPosition(leftSpeed);
+                    right.setPosition(rightSpeed);
                 }
                 return true;
+            }
+        };
+    }
+    public Action flipServos() {
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                if (leftSpeed == 1) {
+                    leftSpeed = 0;
+                    rightSpeed = 1;
+                }else{
+                    leftSpeed = 1;
+                    rightSpeed = 0;
+                }
+                return false;
             }
         };
     }
