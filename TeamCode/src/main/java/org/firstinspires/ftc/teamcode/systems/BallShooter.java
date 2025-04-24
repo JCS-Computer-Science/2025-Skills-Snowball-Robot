@@ -27,7 +27,7 @@ public class BallShooter {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                motor.setVelocity(100);
+                motor.setVelocity(1000);
                 return false;
             }
         };
@@ -36,7 +36,7 @@ public class BallShooter {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                motor.setVelocity(200);
+                motor.setVelocity(1500);
                 return false;
             }
         };
@@ -45,7 +45,7 @@ public class BallShooter {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                motor.setVelocity(300);
+                motor.setVelocity(2000);
                 return false;
             }
         };
