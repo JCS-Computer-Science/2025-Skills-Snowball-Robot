@@ -24,16 +24,16 @@ public class TankDriveRobot extends OpMode {
     private List<Action> runningActions = new ArrayList<>();
     public GamepadEx driver;
     public TankDrive drive;
-    public ExampleSystem exampleSystem;
-    public Elevator elevator;
     public BlockIntake intake;
     public SlidingArm slide;
     public BlockDump swing;
+
+    //slide takes two full rotations to extend
     public int armInPos = 0;
-    public int armOutPos = 1000;
-    public int armHoldPos = 700;
+    public int armOutPos = -579;
+    public int armHoldPos = -513;
     public int swingIn = 0;
-    public int swingOut = 2000;
+    public int swingOut = -550;
 
 
     @Override
@@ -53,6 +53,8 @@ public class TankDriveRobot extends OpMode {
     public void loop() {
         TelemetryPacket packet = new TelemetryPacket();
         driver.update();
+        telemetry.addData("slider position ", slide.getPosition());
+        telemetry.addData("swing position ", swing.getPosition());
         //add actions as needed here, eg:
         if(driver.getButton(GamepadEx.Button.A).justPressed){
             runningActions.add(drive.toggleSlowMode());

@@ -32,7 +32,7 @@ public class SlidingArm {
 
 				motor.setTargetPosition(position);
 				motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-				motor.setPower(1);
+				motor.setPower(0.8);
 				initialized=true;
 				telemetryPacket.addLine("Sliding arm moving to position "+position);
 			}
