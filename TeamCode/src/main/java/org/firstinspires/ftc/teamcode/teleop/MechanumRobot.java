@@ -50,11 +50,9 @@ public class MechanumRobot extends OpMode {
         if(driver.getButton(GamepadEx.Button.A).justPressed){
             runningActions.add(drive.toggleSlowMode());
         }
-
         if(driver.getButton(GamepadEx.Button.B).justPressed){
             runningActions.add(ballIntake.toggleIntake());
         }
-
         if(driver.getButton(GamepadEx.Button.DPAD_LEFT).justPressed){
             runningActions.add(ballShooter.modeOff());
         }
@@ -69,7 +67,10 @@ public class MechanumRobot extends OpMode {
         }
 
         if(driver.getButton(GamepadEx.Button.X).justPressed){
-            runningActions.add(hopperDoor.toggleOpen());
+            runningActions.add(hopperDoor.open());
+        }
+        if(driver.getButton(GamepadEx.Button.X).justReleased){
+            runningActions.add(hopperDoor.close());
         }
         updateActions(packet);
     }

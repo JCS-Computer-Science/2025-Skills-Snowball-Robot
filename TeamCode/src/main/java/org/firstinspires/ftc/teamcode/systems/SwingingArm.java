@@ -36,7 +36,7 @@ public class SwingingArm {
                 motor.setTargetPosition(position);
                 motor.setTargetPositionTolerance(5);
                 motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                motor.setPower(1);
+                motor.setPower(0.05);
                 initialized = true;
                 telemetryPacket.addLine("Swinging arm moving to position " + position);
             }

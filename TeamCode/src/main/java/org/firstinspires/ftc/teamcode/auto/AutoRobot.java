@@ -13,7 +13,8 @@ public class AutoRobot extends LinearOpMode{
         AutoDrive drive = new AutoDrive(hardwareMap);
         waitForStart();
         drive.startMotors();
-        drive.runMotors();
+        while (isStarted()) {
+            drive.runMotors();
+        }
     }
-
 }

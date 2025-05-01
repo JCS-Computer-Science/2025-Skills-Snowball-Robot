@@ -29,11 +29,20 @@ public class HopperDoor {
         };
     }
 
-    public Action toggleOpen() {
+    public Action open() {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                isOpen = !isOpen;
+                isOpen = true;
+                return false;
+            }
+        };
+    };
+    public Action close() {
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                isOpen = false;
                 return false;
             }
         };

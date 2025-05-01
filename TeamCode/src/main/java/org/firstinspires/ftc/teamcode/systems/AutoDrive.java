@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class AutoDrive {
     private DcMotorEx left;
     private DcMotorEx right;
+    private DcMotorEx constant;
     public boolean reversed = false;
     private ElapsedTime time = new ElapsedTime();
     public AutoDrive(HardwareMap hardwareMap){
@@ -24,6 +25,8 @@ public class AutoDrive {
         right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         right.setPower(0);
+        constant = hardwareMap.get(DcMotorEx.class, "constant");
+        constant.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
     public Action startMotors() {
         return new Action() {
@@ -31,6 +34,7 @@ public class AutoDrive {
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 left.setPower(0.8);
                 right.setPower(0.8);
+                constant.setPower(1);
                 time.reset();
                 return false;
             }
