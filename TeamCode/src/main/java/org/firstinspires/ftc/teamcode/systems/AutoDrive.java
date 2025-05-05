@@ -11,15 +11,16 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class AutoDrive {
-    private DcMotorEx left;
-    private DcMotorEx right;
+    public DcMotorEx left;
+    public DcMotorEx right;
     private DcMotorEx constant;
     public boolean reversed = false;
-    private ElapsedTime time = new ElapsedTime();
+    public ElapsedTime time = new ElapsedTime();
     public AutoDrive(HardwareMap hardwareMap){
         left = hardwareMap.get(DcMotorEx.class, "leftMotor");
         left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        left.setDirection(DcMotorSimple.Direction.REVERSE);
         left.setPower(0);
         right = hardwareMap.get(DcMotorEx.class, "rightMotor");
         right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -44,21 +45,22 @@ public class AutoDrive {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                if(time.seconds() == 6) {
+                if(time.seconds() >= 3) {
                     if (reversed) {
-                        left.setDirection(DcMotorSimple.Direction.FORWARD);
-                        right.setDirection(DcMotorSimple.Direction.FORWARD);
-                        reversed = false;
-                        time.reset();
-                    } else {
                         left.setDirection(DcMotorSimple.Direction.REVERSE);
-                        right.setDirection(DcMotorSimple.Direction.REVERSE);
-                        reversed = true;
+                        right.setDirection(DcMotorSimple.Direction.FORWARD);
                         time.reset();
+                        reversed = false;
+                    } else {
+                        left.setDirection(DcMotorSimple.Direction.FORWARD);
+                        right.setDirection(DcMotorSimple.Direction.REVERSE);
+                        time.reset();
+                        reversed = true;
                     }
                 }
-                return true;
+                return false;
             }
         };
     }
+
 }

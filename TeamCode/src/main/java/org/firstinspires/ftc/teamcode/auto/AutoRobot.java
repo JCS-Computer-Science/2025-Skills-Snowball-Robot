@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -21,9 +22,27 @@ public class AutoRobot extends OpMode{
         drive= new AutoDrive(hardwareMap);
         runningActions.add(drive.startMotors());
     }
-
+//    public void start(){
+//        runningActions.add(drive.runMotors());
+//    }
     @Override
     public void loop(){
+        TelemetryPacket packet = new TelemetryPacket();
         runningActions.add(drive.runMotors());
+        telemetry.addData("time", drive.time);
+        telemetry.addData("reversed?", drive.reversed);
+        updateActions(packet);
+    }
+
+    private void updateActions(TelemetryPacket packet){
+        List<Action> newActions = new ArrayList<>();
+        for(Action action : runningActions){
+            action.preview(packet.fieldOverlay());
+            if(action.run(packet)){
+                newActions.add(action);
+            }
+            runningActions = newActions;
+
+        }
     }
 }
