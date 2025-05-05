@@ -40,7 +40,7 @@ public class TankDriveRobot extends OpMode {
         drive=new TankDrive(hardwareMap);
         intake=new BlockIntake(hardwareMap);
 
-        .      slide=new SlidingArm(hardwareMap);
+        slide=new SlidingArm(hardwareMap);
         swing=new BlockDump(hardwareMap);
         runningActions.add(drive.driveAction(driver));
         runningActions.add(intake.runServos());
