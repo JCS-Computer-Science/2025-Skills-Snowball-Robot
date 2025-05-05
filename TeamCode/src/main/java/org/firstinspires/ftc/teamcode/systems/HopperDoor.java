@@ -20,7 +20,7 @@ public class HopperDoor {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if(!isOpen){
-                    servo.setPosition(0);
+                    servo.setPosition(1);
                 }else{
                     servo.setPosition(0.5);
                 }

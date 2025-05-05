@@ -44,7 +44,7 @@ public class AutoDrive {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                if(time.seconds() == 5) {
+                if(time.seconds() == 6) {
                     if (reversed) {
                         left.setDirection(DcMotorSimple.Direction.FORWARD);
                         right.setDirection(DcMotorSimple.Direction.FORWARD);

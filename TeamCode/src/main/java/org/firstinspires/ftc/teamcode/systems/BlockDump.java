@@ -31,6 +31,7 @@ public class BlockDump {
 				motor.setTargetPosition(position);
 				motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 				motor.setPower(1);
+				motor.setPositionPIDFCoefficients(0.5);
 				initialized=true;
 				telemetryPacket.addLine("Sliding arm moving to position "+position);
 			}
@@ -39,14 +40,7 @@ public class BlockDump {
 				return false;
 			}
 
-			if(motor.isBusy()){
-				return true;
-			}else{
-				motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-				motor.setPower(0);
-				return false;
-			}
-
+			return true;
 		}
 	}
 

@@ -24,7 +24,7 @@ import java.util.List;
 
 @Config
 public final class TankDrive {
-    public boolean slowMode = false;
+    public int slowMode = 0;
     public final List<DcMotorEx> leftMotors, rightMotors;
     public final VoltageSensor voltageSensor;
     public TankDrive(HardwareMap hardwareMap) {
@@ -77,7 +77,7 @@ public final class TankDrive {
         }
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            if(!slowMode) {
+            if(slowMode == 0) {
                 setDrivePowers(new PoseVelocity2d(
                         new Vector2d(
                                 -(driver.gamepad.right_trigger - driver.gamepad.left_trigger),
@@ -85,13 +85,21 @@ public final class TankDrive {
                         ),
                         driver.gamepad.right_stick_x * 0.5
                 ));
-            }else{
+            }else if(slowMode == 1){
                 setDrivePowers(new PoseVelocity2d(
                         new Vector2d(
                                 -(driver.gamepad.right_trigger - driver.gamepad.left_trigger)*0.5,
                                 -0
                         ),
                         driver.gamepad.right_stick_x * 0.25
+                ));
+            }else{
+                setDrivePowers(new PoseVelocity2d(
+                        new Vector2d(
+                                -(driver.gamepad.right_trigger - driver.gamepad.left_trigger)*0.25,
+                                -0
+                        ),
+                        driver.gamepad.right_stick_x * 0.125
                 ));
             }
             return true;
@@ -105,7 +113,11 @@ public final class TankDrive {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                slowMode=!slowMode;
+                if(slowMode < 2){
+                    slowMode++;
+                }else{
+                    slowMode = 0;
+                }
                 return false;
             }
         };

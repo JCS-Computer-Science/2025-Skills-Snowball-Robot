@@ -16,9 +16,9 @@ public class SwingingArm {
     public SwingingArm(HardwareMap hardwareMap) {
         motor = hardwareMap.get(DcMotorEx.class, "swingingArm");
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motor.setPositionPIDFCoefficients(3);
+        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motor.setTargetPosition(0);
-        motor.setTargetPositionTolerance(20);
+        motor.setTargetPositionTolerance(0);
     }
 
     public class SetPosition implements Action {
@@ -34,9 +34,9 @@ public class SwingingArm {
             if (!this.initialized) {
 
                 motor.setTargetPosition(position);
-                motor.setTargetPositionTolerance(5);
+                motor.setPositionPIDFCoefficients(0.0001);
                 motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                motor.setPower(0.05);
+
                 initialized = true;
                 telemetryPacket.addLine("Swinging arm moving to position " + position);
             }
@@ -44,7 +44,7 @@ public class SwingingArm {
                 //if another target got set by another action, stop this action
                 return false;
             }
-            return motor.isBusy();
+            return true;
         }
     }
 
@@ -52,6 +52,7 @@ public class SwingingArm {
         return motor.getCurrentPosition();
     }
 
+    public int getTarPosition(){return motor.getTargetPosition();}
 
     public Action setPosition(int position){
         return new SetPosition(position);

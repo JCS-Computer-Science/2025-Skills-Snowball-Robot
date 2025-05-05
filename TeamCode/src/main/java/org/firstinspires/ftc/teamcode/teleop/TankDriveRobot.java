@@ -29,9 +29,9 @@ public class TankDriveRobot extends OpMode {
     public BlockDump swing;
     public int armInPos = 0;
     public int armOutPos = -579;
-    public int armHoldPos = -500;
+    public int armHoldPos = -495;
     public int swingIn = 0;
-    public int swingOut = -550;
+    public int swingOut = -520;
 
 
     @Override
@@ -52,6 +52,8 @@ public class TankDriveRobot extends OpMode {
         driver.update();
         telemetry.addData("slide position ", slide.getPosition());
         telemetry.addData("swing position ", swing.getPosition());
+        telemetry.addData("swing target pos ", swing.getTarPosition());
+        telemetry.addData("slowMode ", drive.slowMode);
         //add actions as needed here, eg:
         if(driver.getButton(GamepadEx.Button.A).justPressed){
             runningActions.add(drive.toggleSlowMode());
