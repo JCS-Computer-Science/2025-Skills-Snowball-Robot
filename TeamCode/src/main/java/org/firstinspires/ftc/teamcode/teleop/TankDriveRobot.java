@@ -27,9 +27,9 @@ public class TankDriveRobot extends OpMode {
     public BlockIntake intake;
     public SlidingArm slide;
     public BlockDump swing;
-    public int armInPos = 0;
-    public int armOutPos = -579;
-    public int armHoldPos = -495;
+    public int armInPos = 88;
+    public int armOutPos = -579+88;
+    public int armHoldPos = -495+88;
     public int swingIn = 0;
     public int swingOut = -520;
 
@@ -79,6 +79,8 @@ public class TankDriveRobot extends OpMode {
         }
         if(driver.getButton(GamepadEx.Button.DPAD_UP).justPressed){
             runningActions.add(swing.setPosition(swingIn));
+        }if(driver.getButton(GamepadEx.Button.DPAD_LEFT).justPressed){
+            runningActions.add(slide.setPosition(0));
         }
         updateActions(packet);
     }

@@ -20,7 +20,7 @@ public class AutoDrive {
         left = hardwareMap.get(DcMotorEx.class, "leftMotor");
         left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        left.setDirection(DcMotorSimple.Direction.REVERSE);
+//        left.setDirection(DcMotorSimple.Direction.REVERSE);
         left.setPower(0);
         right = hardwareMap.get(DcMotorEx.class, "rightMotor");
         right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -46,19 +46,11 @@ public class AutoDrive {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if(time.seconds() >= 3) {
-                    if (reversed) {
-                        left.setDirection(DcMotorSimple.Direction.REVERSE);
-                        right.setDirection(DcMotorSimple.Direction.FORWARD);
+                        left.setPower(-left.getPower());
+                        right.setPower(-right.getPower());
                         time.reset();
-                        reversed = false;
-                    } else {
-                        left.setDirection(DcMotorSimple.Direction.FORWARD);
-                        right.setDirection(DcMotorSimple.Direction.REVERSE);
-                        time.reset();
-                        reversed = true;
-                    }
                 }
-                return false;
+                return true;
             }
         };
     }
